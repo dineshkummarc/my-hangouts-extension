@@ -15,6 +15,7 @@ CaptureEffectsController = function(galleryController) {
   this.texture = null;
   this.originalData = {};
   this.filterTemplate = $('#filter-template');
+	this.textTemplate = $('#text-filter-template');
 	this.filterCount = 0;
 };
 
@@ -143,6 +144,7 @@ CaptureEffectsController.prototype.onWindowResize = function() {
 };
 
 CaptureEffectsController.prototype.onEffectClose = function(e) {
+	$('#nubs').empty();
 	$(e.target).parent().fadeOut();
 	$(e.target).parent().remove();
 };
@@ -301,7 +303,13 @@ CaptureEffectsController.prototype.loadEffects = function() {
         this.addSlider('size', 'Size', 3, 20, 4, 0.01);
       }, function() {
         self.getEffectCanvas().colorHalftone(this.center.x, this.center.y, this.angle, this.size).update();
-      })
+      }),
+			new Filter('Text', 'text', function() {
+				this.addNub('left', 0.5, 0.5);
+				this.addSlider('size', 'Size', 8, 36, 1);
+			}, function() {
+
+			})
     ]
   };
 };
@@ -452,6 +460,24 @@ Filter.prototype.use = function(effectController, filterName, selectedIndex) {
   var canvas = effectController.glfxCanvas;		
 	// Index of the panel that was selected
 	var index = selectedIndex;
+
+	// replace fx-panel if text
+	if (filterName == 'Text') {
+  	var newFilter = effectController.textTemplate.tmpl({_id:index});
+		$("#effects"+index).replaceWith(newFilter);
+		$('#expandableColor').jPicker({
+			window:{expandable:true, position:{y:'center'}},
+			images:{clientPath: 'img/jpicker/'}
+		}, function(color, context) {
+			var all = color.val('all');
+			console.log(all);
+			// call collectEffects and refresh the canvas
+		});
+	  $('.close').click(effectController.onEffectClose.bind(effectController));
+		
+	}
+
+	
   // Clear the sliders
   $('#sliders'+index).empty();
   $('#sliders'+index).data('type', filterName);
@@ -474,7 +500,8 @@ Filter.prototype.use = function(effectController, filterName, selectedIndex) {
     });
     this[slider.name] = slider.value;
   }
-	this.drawNubs(canvas, this.nubs);
+	this.drawNubs(canvas, this.nubs);		
+
   this.update();
 };
 

@@ -6,10 +6,12 @@
   <link rel="stylesheet" href="/css/common.css" />
   <link rel="stylesheet" href="/css/capture_gallery.css" />
   <link rel="stylesheet" href="/css/lightbox.css" />
+	<link rel="stylesheet" href="/css/jPicker-1.1.6.min.css" />
   <script src="/js/libs/jquery-1.7.1.min.js"></script>
   <script src="/js/libs/jquery.tmpl.min.js"></script>
   <script src="/js/libs/jquery.timeago.js"></script> 
   <script src="/js/libs/jquery.ui.slider.js"></script>
+	<script src="/js/libs/jpicker-1.1.6.min.js"></script>
   <script src="/js/libs/glfx.js"></script>
 	<script src="/js/libs/underscore-1.1.6.js"></script>
   <script src="/js/modules/capture_moments/capture_gallery_filter.js"></script>
@@ -66,6 +68,15 @@
       </span>
     </div>
   </li>
+</script>
+<script type="text/x-jquery-tmpl" id="text-filter-template">
+	<div class="fx-panel" id='effects${_id}' data-index='${_id}'>
+		<span class="close">X</span>
+		Font:<select class="fonts"></select></br>
+		Color: <span id="expandableColor" /><br/>
+		<div class='sliders' id='sliders${_id}'></div><br/>
+		Text: <input type="text" maxlength="20"/><br/>
+	</div>
 </script>
 <div class="no-captures">
   <h1>You currently have no captures.</h1>
