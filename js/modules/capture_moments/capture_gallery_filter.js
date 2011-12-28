@@ -473,6 +473,9 @@ Filter.prototype.use = function(effectController, filterName, selectedIndex) {
 			console.log(all);
 			// call collectEffects and refresh the canvas
 		});
+		$('text'+index).change(function(){
+			// call collectEffects and refresh the canvas
+		});
 	  $('.close').click(effectController.onEffectClose.bind(effectController));
 		
 	}
